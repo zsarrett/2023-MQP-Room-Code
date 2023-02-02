@@ -26,7 +26,7 @@ void setup()
 }
 
 bool simonRed(){
-   brightnessR= analogRead (2); // Read the brightness  
+   brightnessR= analogRead (34); // Read the brightness  
    brightnessR = brightnessR / 16; // Adjust the brightness value
 
    //Serial.println(brightness);
@@ -49,7 +49,7 @@ bool simonRed(){
 
  bool simonBlue(){
    if(simonRed() == true){
-      brightnessB = analogRead(0);
+      brightnessB = analogRead(35);
       brightnessB = brightnessB / 16;
       if(brightnessB > 200){
        digitalWrite(blueLED, HIGH);
