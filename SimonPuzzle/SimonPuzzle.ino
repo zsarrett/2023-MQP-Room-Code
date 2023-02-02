@@ -35,7 +35,8 @@ bool simonRed() {
   brightnessR = analogRead(34);    // Read the brightness
   brightnessR = brightnessR / 16;  // Adjust the brightness value
 
-  //Serial.println(brightnessR);
+  Serial.print("Red");
+  Serial.println(brightnessR);
 
   if (brightnessR < 200 && redOn == false) {
    // Serial.println("Flashing RED");
@@ -63,7 +64,7 @@ bool simonBlue() {
     brightnessB = analogRead(32);
     brightnessB = brightnessB / 16;
 
-    //Serial.println("Brightness B: "  + brightnessB);
+    Serial.println("Brightness B: "  + brightnessB);
 
     if (brightnessB < 200) {
       //Serial.println("Flash BLUE");
