@@ -35,9 +35,11 @@ bool simonRed(){
     {
         digitalWrite (redLED, HIGH); // turn on light
         delay (10); // Wait 10 ms//digitalWrite (ledPin2, HIGH);
+        Serial.print("RED FOUND");
         return true;
     }
     else {
+      Serial.print("Flashing RED");
       digitalWrite (redLED, LOW); // turn off light
       delay(500);
       digitalWrite (redLED, HIGH);	// turn on the LED
@@ -54,9 +56,11 @@ bool simonRed(){
       if(brightnessB > 200){
        digitalWrite(blueLED, HIGH);
         delay(10);
+        Serial.print("BLUE FOUND");
         return true;
    }
     else{
+      Serial.print("Flash BLUE");
       digitalWrite (blueLED, LOW); // turn off light
       delay(500);
       digitalWrite (blueLED, HIGH);	// turn on the LED
@@ -72,11 +76,13 @@ bool simonRed(){
       brightnessY = analogRead(32);
       brightnessY = brightnessY / 16;
       if(brightnessY > 200){
+        Serial.print("FOUND YELLOW");
        digitalWrite(yellowLED, HIGH);
         delay(10);
         return true;
    }
     else{
+      Serial.print("YELLOW FLASH");
       digitalWrite (yellowLED, LOW); // turn off light
       delay(500);
       digitalWrite (yellowLED, HIGH);	// turn on the LED
@@ -89,9 +95,15 @@ bool simonRed(){
  }
 
  bool simon(){
+   Serial.print("START RED");
    simonRed();
+   Serial.print("END RED");
+   Serial.print("START BLUE");
    simonBlue();
+   Serial.print("END BLUE");
+   Serial.print("START YELLOW");
    simonYellow();
+   Serial.print("END YELLOW")
 
    return true;
  }
