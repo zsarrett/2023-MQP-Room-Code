@@ -59,7 +59,7 @@ bool simonRed() {
 bool simonBlue() {
 
 
-  if (simonRed() == true && blueOn == false) {
+  if (redOn == true && blueOn == false) {
 
     brightnessB = analogRead(32);
     brightnessB = brightnessB / 16;
@@ -86,7 +86,7 @@ bool simonBlue() {
 }
 
 bool simonYellow() {
-  if (simonBlue() == true && yellowOn == false) {
+  if (blueOn == true && yellowOn == false) {
 
     brightnessY = analogRead(35);
     brightnessY = brightnessY / 16;
@@ -127,6 +127,8 @@ bool simon() {
 
   return true;
 }
+
+//if blueOn == false and redOn == true
 
 void loop() {
   //Serial.println("HIHI");
