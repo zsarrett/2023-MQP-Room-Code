@@ -1,10 +1,14 @@
+#include "Arduino.h"
+#include "analogWrite.h"
+#include "WiFi.h"
 // Motor A connections
-int pwmA = 5;
-int in1 = #;
-int in2 = #;
+int pwmA = 19;
+int in1 = 18;
+int in2 = 23;
 
 void setup() {
   // put your setup code here, to run once:
+  Serial.begin(115200);
   pinMode(pwmA, OUTPUT);
 	pinMode(in1, OUTPUT);
 	pinMode(in2, OUTPUT);
@@ -16,10 +20,10 @@ void setup() {
 
 void loop() {
 
-  analogWrite(pwmA, 255);
+  analogWrite(pwmA, 250);
 	// Turn on motor A & B
-	digitalWrite(in1, HIGH);
-	digitalWrite(in2, LOW);
+	digitalWrite(in1, LOW);
+	digitalWrite(in2, HIGH);
 	delay(2000);
   digitalWrite(in1, LOW);
 	digitalWrite(in2, LOW);
