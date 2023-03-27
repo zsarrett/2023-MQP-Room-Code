@@ -1,28 +1,34 @@
 // Motor A connections
-int pwmA = 5;
-int in1 = #;
-int in2 = #;
+const int AIN1 = 36;           //control pin 1 on the motor driver for the right motor
+const int AIN2 = 37;            //control pin 2 on the motor driver for the right motor
+const int PWMA = 26;            //speed control pin on the motor driver for the right motor
+
+//VARIABLES
+int motorSpeed = 0;       //starting speed for the motor
 
 void setup() {
-  // put your setup code here, to run once:
-  pinMode(pwmA, OUTPUT);
-	pinMode(in1, OUTPUT);
-	pinMode(in2, OUTPUT);
-
-  digitalWrite(in1, LOW);
-	digitalWrite(in2, LOW);
-
+  //set the motor contro pins as outputs
+  pinMode(AIN1, OUTPUT);
+  pinMode(AIN2, OUTPUT);
+  pinMode(PWMA, OUTPUT);
 }
 
 void loop() {
+    //drive motor forward (positive speed)
+    digitalWrite(AIN1, HIGH);                         //set pin 1 to high
+    digitalWrite(AIN2, LOW);                          //set pin 2 to low
+    digitalWrite(PWMA, HIGH);               //now that the motor direction is set, drive it at max speed
+    delay(3000);
 
-  analogWrite(pwmA, 255);
-	// Turn on motor A & B
-	digitalWrite(in1, HIGH);
-	digitalWrite(in2, LOW);
-	delay(2000);
-  digitalWrite(in1, LOW);
-	digitalWrite(in2, LOW);
-  // put your main code here, to run repeatedly:
+    // //drive motor backward (negative speed)
+    // digitalWrite(AIN1, LOW);                          //set pin 1 to low
+    // digitalWrite(AIN2, HIGH);                         //set pin 2 to high
+    // digitalWrite(PWMA, HIGH);               //now that the motor direction is set, drive it at max speed
+    // delay(3000);
 
+    //stop motor
+    digitalWrite(AIN1, LOW);                          //set pin 1 to low
+    digitalWrite(AIN2, LOW);                          //set pin 2 to low
+    digitalWrite(PWMA, LOW);               //now that the motor direction is set, stop motor
+    delay(3000);
 }
