@@ -8,17 +8,17 @@ int motorSpeed = 0;       //starting speed for the motor
 
 void setup() {
   //set the motor contro pins as outputs
+  Serial.begin(115200);
   pinMode(AIN1, OUTPUT);
   pinMode(AIN2, OUTPUT);
   pinMode(PWMA, OUTPUT);
 }
-
-void loop() {
-    //drive motor forward (positive speed)
+void door(){
+   //drive motor forward (positive speed)
     digitalWrite(AIN1, HIGH);                         //set pin 1 to high
     digitalWrite(AIN2, LOW);                          //set pin 2 to low
     digitalWrite(PWMA, HIGH);               //now that the motor direction is set, drive it at max speed
-    delay(3000);
+    delay(2500);
 
     // //drive motor backward (negative speed)
     // digitalWrite(AIN1, LOW);                          //set pin 1 to low
@@ -31,4 +31,12 @@ void loop() {
     digitalWrite(AIN2, LOW);                          //set pin 2 to low
     digitalWrite(PWMA, LOW);               //now that the motor direction is set, stop motor
     delay(3000);
+}
+
+void loop() {
+  door();
+  Serial.println("spin door");
+  while(1){
+    
+  }
 }
