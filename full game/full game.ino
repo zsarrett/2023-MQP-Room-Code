@@ -14,6 +14,12 @@ bool blueOn;
 bool yellowOn;
 bool simonDone;
 
+/*Door Setup*/
+const int AIN1 = 36;           //control pin 1 on the motor driver for the right motor
+const int AIN2 = 37;            //control pin 2 on the motor driver for the right motor
+const int PWMA = 26;  
+int count;
+
 /* MQTT Stuff */
 const char *ssid = "WPI-Open";
 const char *password = NULL;
@@ -35,6 +41,10 @@ void setup() {
   pinMode(yellowLED, OUTPUT);
   pinMode(redLED, OUTPUT);
   pinMode(blueLED, OUTPUT);
+
+  pinMode(AIN1, OUTPUT);
+  pinMode(AIN2, OUTPUT);
+  pinMode(PWMA, OUTPUT);
 
   redOn = false;
   blueOn = false;
@@ -148,6 +158,32 @@ bool password(){
   }
 }
 
+bool door(){
+    count = 0;
+    if (count == 0){  // & message of password recieved
+    digitalWrite(AIN1, HIGH);                         //set pin 1 to high
+    digitalWrite(AIN2, LOW);                          //set pin 2 to low
+    digitalWrite(PWMA, HIGH);               //now that the motor direction is set, drive it at max speed
+    delay(2000);
+
+    // //drive motor backward (negative speed)
+    // digitalWrite(AIN1, LOW);                          //set pin 1 to low
+    // digitalWrite(AIN2, HIGH);                         //set pin 2 to high
+    // digitalWrite(PWMA, HIGH);               //now that the motor direction is set, drive it at max speed
+    // delay(3000);
+
+    //stop motor
+    digitalWrite(AIN1, LOW);                          //set pin 1 to low
+    digitalWrite(AIN2, LOW);                          //set pin 2 to low
+    digitalWrite(PWMA, LOW);               //now that the motor direction is set, stop motor
+    delay(3000);
+    count = 1;
+    }
+    else {
+      return true;
+    }
+}
+
 //if blueOn == false and redOn == true
 
 void loop() {
@@ -155,6 +191,7 @@ void loop() {
 
   simon();
   password();
+  door();
 
   //analogWrite (yellowLED, brightness); // Put the value read for the LED
 }
