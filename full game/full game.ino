@@ -160,7 +160,7 @@ bool password(){
 
 bool door(){
     count = 0;
-    if (count == 0){  // & message of password recieved
+    if (count == 0 && simonDone == true){  // & message of password recieved
     digitalWrite(AIN1, HIGH);                         //set pin 1 to high
     digitalWrite(AIN2, LOW);                          //set pin 2 to low
     digitalWrite(PWMA, HIGH);               //now that the motor direction is set, drive it at max speed
