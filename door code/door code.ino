@@ -18,7 +18,7 @@ void door(){
     digitalWrite(AIN1, HIGH);                         //set pin 1 to high
     digitalWrite(AIN2, LOW);                          //set pin 2 to low
     digitalWrite(PWMA, HIGH);               //now that the motor direction is set, drive it at max speed
-    delay(2500);
+    delay(1800);
 
     // //drive motor backward (negative speed)
     // digitalWrite(AIN1, LOW);                          //set pin 1 to low
@@ -37,6 +37,6 @@ void loop() {
   door();
   Serial.println("spin door");
   while(1){
-    
+ 
   }
 }
