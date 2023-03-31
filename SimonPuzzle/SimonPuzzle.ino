@@ -17,6 +17,14 @@ bool redOn;
 bool blueOn;
 bool yellowOn;
 
+int count;
+
+const int AIN1 = 36;           
+const int AIN2 = 37;           
+const int PWMA = 26;            
+
+
+
 void setup() {
   Serial.begin(115200);
   pinMode(LED_BUILTIN, OUTPUT);
@@ -24,9 +32,14 @@ void setup() {
   pinMode(redLED, OUTPUT);
   pinMode(blueLED, OUTPUT);
 
+  pinMode(AIN1, OUTPUT);
+  pinMode(AIN2, OUTPUT);
+  pinMode(PWMA, OUTPUT);
+
   redOn = false;
   blueOn = false;
   yellowOn = false;
+  count = 0;
 
   //Serial.println("Setup done");
 }
@@ -125,14 +138,45 @@ bool simon() {
   if (yellowOn == false){simonYellow();}
   //Serial.println("END YELLOW");
 
+  //door();
+
   return true;
 }
 
-//if blueOn == false and redOn == true
+void door(){
+
+  
+
+  if(yellowOn== true && count == 0){
+   //drive motor forward (positive speed)
+    digitalWrite(AIN1, HIGH);                         //set pin 1 to high
+    digitalWrite(AIN2, LOW);                          //set pin 2 to low
+    digitalWrite(PWMA, HIGH);               //now that the motor direction is set, drive it at max speed
+    delay(1800);
+
+    // //drive motor backward (negative speed)
+    // digitalWrite(AIN1, LOW);                          //set pin 1 to low
+    // digitalWrite(AIN2, HIGH);                         //set pin 2 to high
+    // digitalWrite(PWMA, HIGH);               //now that the motor direction is set, drive it at max speed
+    // delay(3000);
+
+    //stop motor
+    digitalWrite(AIN1, LOW);                          //set pin 1 to low
+    digitalWrite(AIN2, LOW);                          //set pin 2 to low
+    digitalWrite(PWMA, LOW);               //now that the motor direction is set, stop motor
+    delay(3000);
+    count = count + 1;
+  }
+}
+
+//if blueOn == false and redOn == true`x
 
 void loop() {
   //Serial.println("HIHI");
 
   simon();
+  delay(100);
+  door();
+  
   //analogWrite (yellowLED, brightness); // Put the value read for the LED
 }
