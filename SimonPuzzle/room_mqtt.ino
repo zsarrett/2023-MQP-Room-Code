@@ -1,5 +1,6 @@
 /*
     File Created: Apr. 3, 2023
+    https://randomnerdtutorials.com/esp32-mqtt-publish-subscribe-arduino-ide/
 */
 
 #include <WiFi.h>
@@ -19,18 +20,18 @@
 // Replace the next variables with your SSID/Password combination
 const char *ssid = "WPI-Open";
 const char *password = NULL;
-const char *ID = "website_mqtt_test"
+const char *ID = "website_mqtt_test"; 
 
-    // Add your MQTT Broker IP address, example:
-    // const char* mqtt_server = "192.168.1.144";
-    const char *mqtt_server = "mqtt.eclipseprojects.io";
+// Add your MQTT Broker IP address, example:
+// const char* mqtt_server = "192.168.1.144";
+const char *mqtt_server = "mqtt.eclipseprojects.io";
 
 WiFiClient espClient;
 PubSubClient client(espClient);
 
-/* Publishers -> "esp32/..."  */
+/* Publishers -> "room/..."  */
 const char *room_state = "room/state";
-/* Subscribers -> "rpi/..."  */
+/* Subscribers -> "robot/..."  */
 const char *receive_code = "robot/test";
 const char *marker_id = "robot/aruco";
 
