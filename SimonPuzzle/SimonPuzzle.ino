@@ -140,6 +140,8 @@ bool simon() {
 
   //door();
 
+  //Todo SEND MESSAGE SEND HERE!!!!!!!!
+
   return true;
 }
 
@@ -147,7 +149,7 @@ void door(){
 
   
 
-  if(yellowOn== true && count == 0){
+  if(yellowOn== true && count == 0){     // WAIT FOR RESPONSE FROM WEBSITE ALSO IN THIS STATEMENT
    //drive motor forward (positive speed)
     digitalWrite(AIN1, HIGH);                         //set pin 1 to high
     digitalWrite(AIN2, LOW);                          //set pin 2 to low
