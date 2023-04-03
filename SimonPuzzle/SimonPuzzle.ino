@@ -21,8 +21,11 @@ int count;
 
 const int AIN1 = 36;           
 const int AIN2 = 37;           
-const int PWMA = 26;            
+const int PWMA = 26;   
 
+
+// --- MQTT Setup --- 
+// --- MQTT Setup Ends --- 
 
 
 void setup() {
@@ -70,8 +73,6 @@ bool simonRed() {
 }
 
 bool simonBlue() {
-
-
   if (redOn == true && blueOn == false) {
 
     brightnessB = analogRead(32);
@@ -146,9 +147,6 @@ bool simon() {
 }
 
 void door(){
-
-  
-
   if(yellowOn== true && count == 0){     // WAIT FOR RESPONSE FROM WEBSITE ALSO IN THIS STATEMENT
    //drive motor forward (positive speed)
     digitalWrite(AIN1, HIGH);                         //set pin 1 to high
@@ -172,7 +170,6 @@ void door(){
 }
 
 //if blueOn == false and redOn == true`x
-
 void loop() {
   //Serial.println("HIHI");
 
