@@ -34,8 +34,10 @@ const int PWMA = 26;
 
 // --- MQTT Setup ---
 // Replace the next variables with your SSID/Password combination
-const char *ssid = "WPI-Open";
-const char *password = NULL;
+const char *ssid = "Liang's iPhone";
+const char *password = "1234567890";
+// const char *ssid = "WPI-Open";
+// const char *password = NULL;
 const char *ID = "website_mqtt_test";
 
 // Add your MQTT Broker IP address, example:
@@ -54,31 +56,6 @@ const char *marker_id = "robot/aruco";
 long lastMsg = 0;
 char msg[50];
 int value = 0;
-
-void mqtt_setup()
-{
-  Serial.begin(115200);
-
-  setup_wifi();
-  client.setServer(mqtt_server, 1883);
-  client.setCallback(callback);
-
-  pinMode(LED_BUILTIN, OUTPUT);
-  pinMode(yellowLED, OUTPUT);
-  pinMode(redLED, OUTPUT);
-  pinMode(blueLED, OUTPUT);
-
-  pinMode(AIN1, OUTPUT);
-  pinMode(AIN2, OUTPUT);
-  pinMode(PWMA, OUTPUT);
-
-  redOn = false;
-  blueOn = false;
-  yellowOn = false;
-  count = 0;
-
-  // Serial.println("Setup done");
-}
 
 void setup_wifi()
 {
@@ -149,6 +126,31 @@ void check_connection()
 }
 
 // --- MQTT Setup Ends ---
+
+void setup()
+{
+  Serial.begin(115200);
+
+  setup_wifi();
+  client.setServer(mqtt_server, 1883);
+  client.setCallback(callback);
+
+  pinMode(LED_BUILTIN, OUTPUT);
+  pinMode(yellowLED, OUTPUT);
+  pinMode(redLED, OUTPUT);
+  pinMode(blueLED, OUTPUT);
+
+  pinMode(AIN1, OUTPUT);
+  pinMode(AIN2, OUTPUT);
+  pinMode(PWMA, OUTPUT);
+
+  redOn = false;
+  blueOn = false;
+  yellowOn = false;
+  count = 0;
+
+  // Serial.println("Setup done");
+}
 
 bool simonRed()
 {
