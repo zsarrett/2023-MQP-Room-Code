@@ -34,10 +34,10 @@ const int PWMA = 26;
 
 // --- MQTT Setup ---
 // Replace the next variables with your SSID/Password combination
-const char *ssid = "Liang's iPhone";
-const char *password = "1234567890";
-// const char *ssid = "WPI-Open";
-// const char *password = NULL;
+// const char *ssid = "Liang's iPhone";
+// const char *password = "1234567890";
+const char *ssid = "WPI-Open";
+const char *password = NULL;
 const char *ID = "website_mqtt_test";
 
 // Add your MQTT Broker IP address, example:
