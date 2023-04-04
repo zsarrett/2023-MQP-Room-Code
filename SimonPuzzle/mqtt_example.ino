@@ -1,3 +1,33 @@
+/* MQTT Stuff */
+const char *ssid = "WPI-Open";
+const char *password = NULL;
+const char *ID = "esp_boi";  // Name of our device, must be unique
+IPAddress broker(130, 215, 120, 229); // IP address of Raspberry Pi ***WILL CHANGE***
+WiFiClient wclient;
+PubSubClient client(wclient); // Setup MQTT 
+
+
+/* Publishers -> "esp32/..."  */
+const char *room_state = "esp32/state";  
+/* Subscribers -> "rpi/..."  */
+const char *receive_code = "rpi/passcode";
+const char *marker_id = "rpi/aruco";
+
+
+void setup() {
+  Serial.begin(115200);
+//  while(!Serial) {} //comment out unless testing!
+//  /* setup MQTT protocols */
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password); // Connect to network
+  while (WiFi.status() != WL_CONNECTED) { // Wait for connection
+    delay(500);
+  }
+  Serial.println("WiFi connected");
+  client.setServer(broker, 1883);
+  client.setCallback(callback); 
+}
+
 /************************ MQTT Methods ************************/
 void pub(const char* topic, char* msg){
   client.publish(topic, msg);

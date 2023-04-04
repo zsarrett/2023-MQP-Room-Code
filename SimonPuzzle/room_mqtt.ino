@@ -6,8 +6,6 @@
 #include <WiFi.h>
 #include <PubSubClient.h>
 #include <Wire.h>
-
-#include <ESP32Servo.h>
 #include <Arduino.h>
 
 #ifdef U8X8_HAVE_HW_SPI
@@ -61,14 +59,11 @@ void setup_wifi()
 
   while (WiFi.status() != WL_CONNECTED)
   {
-    delay(500);
     Serial.print("connecting...");
+    delay(500);
   }
 
-  Serial.println("");
   Serial.println("WiFi connected");
-  Serial.println("IP address: ");
-  Serial.println(WiFi.localIP());
 }
 
 void callback(char *topic, byte *message, unsigned int length)
@@ -121,11 +116,7 @@ void check_connection(){
 
 void loop()
 {
-  if (!client.connected())
-  {
-    reconnect();
-  }
-  client.loop();
+  check_connection();
 
   long now = millis();
   if (now - lastMsg > 5000)
