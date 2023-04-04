@@ -93,7 +93,6 @@ void setup_wifi()
 
   while (WiFi.status() != WL_CONNECTED)
   {
-    Serial.print("connecting...");
     delay(500);
   }
 
@@ -109,10 +108,10 @@ void callback(char *topic, byte *message, unsigned int length)
 
   // If a message is received on the topic esp32/output, you check if the message is either "on" or "off".
   // Changes the output state according to the message
-  if (String(topic) == receive_code)
-  {
-    Serial.println("message received!");
-  }
+  // if (String(topic) == receive_code)
+  // {
+  //   Serial.println("message received!");
+  // }
 }
 
 void reconnect()
@@ -156,8 +155,8 @@ bool simonRed()
   brightnessR = analogRead(34);   // Read the brightness
   brightnessR = brightnessR / 16; // Adjust the brightness value
 
-  Serial.print("Red");
-  Serial.println(brightnessR);
+  // Serial.print("Red");
+  // Serial.println(brightnessR);
 
   if (brightnessR < 200 && redOn == false)
   {
@@ -188,7 +187,7 @@ bool simonBlue()
     brightnessB = analogRead(32);
     brightnessB = brightnessB / 16;
 
-    Serial.println("Brightness B: " + brightnessB);
+    // Serial.println("Brightness B: " + brightnessB);
 
     if (brightnessB < 200)
     {
@@ -220,7 +219,7 @@ bool simonYellow()
     brightnessY = analogRead(35);
     brightnessY = brightnessY / 16;
 
-    Serial.print("Brightness Y: ");
+    // Serial.print("Brightness Y: ");
     // Serial.println(brightnessY);
 
     if (brightnessY < 200)
