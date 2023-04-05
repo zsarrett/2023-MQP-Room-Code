@@ -32,98 +32,98 @@ const int AIN1 = 36;
 const int AIN2 = 37;
 const int PWMA = 26;
 
-// --- MQTT Setup ---
-// Replace the next variables with your SSID/Password combination
-// const char *ssid = "Liang's iPhone";
-// const char *password = "1234567890";
-const char *ssid = "WPI-Open";
-const char *password = NULL;
-const char *ID = "website_mqtt_test";
+// // --- MQTT Setup ---
+// // Replace the next variables with your SSID/Password combination
+// // const char *ssid = "Liang's iPhone";
+// // const char *password = "1234567890";
+// const char *ssid = "WPI-Open";
+// const char *password = NULL;
+// const char *ID = "website_mqtt_test";
 
-// Add your MQTT Broker IP address, example:
-// const char* mqtt_server = "192.168.1.144";
-const char *mqtt_server = "mqtt.eclipseprojects.io";
+// // Add your MQTT Broker IP address, example:
+// // const char* mqtt_server = "192.168.1.144";
+// const char *mqtt_server = "mqtt.eclipseprojects.io";
 
-WiFiClient espClient;
-PubSubClient client(espClient);
+// WiFiClient espClient;
+// PubSubClient client(espClient);
 
-/* Publishers -> "room/..."  */
-const char *room_state = "room/state";
-/* Subscribers -> "robot/..."  */
-const char *receive_code = "robot/test";
-const char *marker_id = "robot/aruco";
+// /* Publishers -> "room/..."  */
+// const char *room_state = "room/state";
+// /* Subscribers -> "robot/..."  */
+// const char *receive_code = "robot/test";
+// const char *marker_id = "robot/aruco";
 
-long lastMsg = 0;
-char msg[50];
-int value = 0;
+// long lastMsg = 0;
+// char msg[50];
+// int value = 0;
 
-void setup_wifi()
-{
-  delay(10);
-  // We start by connecting to a WiFi network
-  Serial.println();
-  Serial.print("Connecting to ");
-  Serial.println(ssid);
+// void setup_wifi()
+// {
+//   delay(10);
+//   // We start by connecting to a WiFi network
+//   Serial.println();
+//   Serial.print("Connecting to ");
+//   Serial.println(ssid);
 
-  WiFi.mode(WIFI_STA);
-  WiFi.begin(ssid, password);
+//   WiFi.mode(WIFI_STA);
+//   WiFi.begin(ssid, password);
 
-  while (WiFi.status() != WL_CONNECTED)
-  {
-    delay(500);
-  }
+//   while (WiFi.status() != WL_CONNECTED)
+//   {
+//     delay(500);
+//   }
 
-  Serial.println("WiFi connected");
-}
+//   Serial.println("WiFi connected");
+// }
 
-void callback(char *topic, byte *message, unsigned int length)
-{
-  Serial.print("Message arrived on topic: ");
-  Serial.print(topic);
-  Serial.print(". \tMessage: ");
-  String messageTemp;
+// void callback(char *topic, byte *message, unsigned int length)
+// {
+//   Serial.print("Message arrived on topic: ");
+//   Serial.print(topic);
+//   Serial.print(". \tMessage: ");
+//   String messageTemp;
 
-  // If a message is received on the topic esp32/output, you check if the message is either "on" or "off".
-  // Changes the output state according to the message
-  // if (String(topic) == receive_code)
-  // {
-  //   Serial.println("message received!");
-  // }
-}
+//   // If a message is received on the topic esp32/output, you check if the message is either "on" or "off".
+//   // Changes the output state according to the message
+//   // if (String(topic) == receive_code)
+//   // {
+//   //   Serial.println("message received!");
+//   // }
+// }
 
-void reconnect()
-{
-  // Loop until we're reconnected
-  while (!client.connected())
-  {
-    Serial.print("Attempting MQTT connection...");
-    // Attempt to connect
-    if (client.connect(ID))
-    {
-      Serial.println("connected");
-      // Subscribe
-      client.subscribe(receive_code);
-      client.subscribe(marker_id);
-    }
-    else
-    {
-      WiFi.disconnect();
-      WiFi.reconnect();
-      Serial.println(" try again in 2 seconds");
-      // Wait 5 seconds before retrying
-      delay(5000);
-    }
-  }
-}
+// void reconnect()
+// {
+//   // Loop until we're reconnected
+//   while (!client.connected())
+//   {
+//     Serial.print("Attempting MQTT connection...");
+//     // Attempt to connect
+//     if (client.connect(ID))
+//     {
+//       Serial.println("connected");
+//       // Subscribe
+//       client.subscribe(receive_code);
+//       client.subscribe(marker_id);
+//     }
+//     else
+//     {
+//       WiFi.disconnect();
+//       WiFi.reconnect();
+//       Serial.println(" try again in 2 seconds");
+//       // Wait 5 seconds before retrying
+//       delay(5000);
+//     }
+//   }
+// }
 
-void check_connection()
-{
-  if (!client.connected())
-  {
-    reconnect();
-  }
-  client.loop();
-}
+// void check_connection()
+// {
+//   if (!client.connected())
+//   {
+//     reconnect();
+//   }
+//   client.loop();
+// }
 
 // --- MQTT Setup Ends ---
 
@@ -131,9 +131,9 @@ void setup()
 {
   Serial.begin(115200);
 
-  setup_wifi();
-  client.setServer(mqtt_server, 1883);
-  client.setCallback(callback);
+  // setup_wifi();
+  // client.setServer(mqtt_server, 1883);
+  // client.setCallback(callback);
 
   pinMode(LED_BUILTIN, OUTPUT);
   pinMode(yellowLED, OUTPUT);
@@ -154,7 +154,7 @@ void setup()
 
 bool simonRed()
 {
-  brightnessR = analogRead(34);   // Read the brightness
+  brightnessR = analogRead(35);//34);   // Read the brightness
   brightnessR = brightnessR / 16; // Adjust the brightness value
 
   // Serial.print("Red");
@@ -183,7 +183,7 @@ bool simonRed()
 
 bool simonBlue()
 {
-  if (redOn == true && blueOn == false)
+  if (yellowOn == true && blueOn == false)
   {
 
     brightnessB = analogRead(32);
@@ -215,10 +215,10 @@ bool simonBlue()
 
 bool simonYellow()
 {
-  if (blueOn == true && yellowOn == false)
+  if (yellowOn == false)
   {
 
-    brightnessY = analogRead(35);
+    brightnessY = analogRead(34);//35);
     brightnessY = brightnessY / 16;
 
     // Serial.print("Brightness Y: ");
@@ -276,7 +276,7 @@ bool simon()
 
 void door()
 {
-  if (yellowOn == true && count == 0)
+  if (redOn == true && count == 0)
   {                           // WAIT FOR RESPONSE FROM WEBSITE ALSO IN THIS STATEMENT
                               // drive motor forward (positive speed)
     digitalWrite(AIN1, HIGH); // set pin 1 to high
@@ -304,12 +304,12 @@ void loop()
 {
   // Serial.println("HIHI");
 
-  check_connection();
-  long now = millis();
-  if (now - lastMsg > 5000)
-  {
-    client.publish(room_state, "testing room mqtt...");
-  }
+  // check_connection();
+  // long now = millis();
+  // if (now - lastMsg > 5000)
+  // {
+  //   client.publish(room_state, "testing room mqtt...");
+  // }
 
   simon();
   delay(100);
