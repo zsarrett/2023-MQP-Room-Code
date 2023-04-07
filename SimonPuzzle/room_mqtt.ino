@@ -28,6 +28,7 @@ const char *ssid = "WPI-Open";
 const char *password = NULL;
 const char *ID = "esp_boi";  // Name of our device, must be unique
 const char *mqtt_server = "mqtt.eclipseprojects.io";
+int counter = 0;
 WiFiClient wclient;
 PubSubClient client(wclient);  // Setup MQTT
 
@@ -68,8 +69,10 @@ void setup() {
 }
 
 void loop() {
+  counter++; 
   check_connection();
-  client.subscribe("robot/test");
+  sub("robot/test");
+  pub("room/test", "hi");
 }
 
 /************************ MQTT Methods ************************/
