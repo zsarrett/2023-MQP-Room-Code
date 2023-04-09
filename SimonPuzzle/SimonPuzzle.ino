@@ -4,7 +4,9 @@
  *  the most obvious difference being the different file you need to include:
  */
 #include "WiFi.h"
+#include <PubSubClient.h>
 //#include "analogWrite.h"
+
 const int yellowLED = 14;
 const int redLED = 27;
 const int blueLED = 22;
@@ -17,14 +19,48 @@ bool yellowOn;
 
 int count;
 
-const int AIN1 = 36;           
-const int AIN2 = 37;           
-const int PWMA = 26;            
+const int AIN1 = 36;
+const int AIN2 = 37;
+const int PWMA = 26;
 
+
+// --- MQTT Setup --- 
+const int httpPort = 80;
+const char *ssid = "WPI-Open";
+const char *password = NULL;
+const char *ID = "room_mqtt";
+const char *mqtt_server = "mqtt.eclipseprojects.io";
+
+WiFiClient wclient;
+PubSubClient client(wclient); 
+
+void wifi_setup() {
+  Serial.print("Connecting to ");
+  Serial.println(ssid);
+
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password);
+
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+
+  Serial.println("");
+  Serial.println("WiFi connected");
+  Serial.println("IP address: ");
+  Serial.println(WiFi.localIP());
+
+  client.setServer(mqtt_server, 1883);
+  client.setCallback(callback);
+  sub("website/test"); 
+}
+// --- MQTT Setup Ends --- 
 
 
 void setup() {
   Serial.begin(115200);
+
  // pinMode(LED_BUILTIN, OUTPUT);
   pinMode(yellowLED, OUTPUT);
   pinMode(redLED, OUTPUT);
@@ -39,8 +75,11 @@ void setup() {
   yellowOn = false;
   count = 0;
 
+  wifi_setup(); 
+
   //Serial.println("Setup done");
 }
+
 bool simonRed() {
   brightnessR = analogRead(33);    // Read the brightness
   brightnessR = brightnessR / 16;  // Adjust the brightness value
@@ -63,6 +102,7 @@ bool simonRed() {
   }
   return false;
 }
+
 bool simonBlue() {
   if (redOn == true && blueOn == false) {
     brightnessB = analogRead(34);
@@ -86,6 +126,7 @@ bool simonBlue() {
   }
   return false;  
 }
+
 bool simonYellow() {
   if (blueOn == true && yellowOn == false) {
     brightnessY = analogRead(35);
@@ -110,6 +151,7 @@ bool simonYellow() {
   }
   return false;
 }
+
 bool simon() {
   //Serial.println("START RED");
   if (redOn == false){simonRed();}
@@ -157,10 +199,58 @@ bool simon() {
 
 void loop() {
   //Serial.println("HIHI");
-
+  pub("room/puzzle", "1"); 
+  check_connection(); 
   simon();
+  pub("room/puzzle", "2"); 
   delay(100);
   //door();
 
   //analogWrite (yellowLED, brightness); // Put the value read for the LED
 }
+
+/************************ MQTT Methods ************************/
+void pub(const char* topic, char* msg){
+  client.publish(topic, msg);
+}
+void sub(const char* topic){
+  client.subscribe(topic);
+}
+
+void reconnect() {
+  char* recn = "connecting...";
+  while (!client.connected()) {
+    Serial.print("Attempting MQTT connection...");
+    // Attempt to connect
+    if (client.connect(ID)) {
+      //Write ALL Subscribers
+      sub("website/test"); 
+    } else {
+      WiFi.disconnect();
+      WiFi.reconnect();
+      Serial.println(" try again in 5 seconds");
+      // Wait 5 seconds before retrying
+      delay(5000);
+    }
+  }
+}
+
+void check_connection(){
+  if (!client.connected()) {
+    reconnect();
+  }
+  client.loop();
+}
+
+/* Handles ALL Subscribers */
+void callback(char* topic, byte* message, unsigned int length) {
+  String messageTemp;
+  
+  for (int i = 0; i < length; i++) {
+    messageTemp += (char)message[i];
+  }
+
+  Serial.println(messageTemp);
+
+}
+/*************************************************************/
