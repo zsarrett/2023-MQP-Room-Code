@@ -54,7 +54,7 @@ void wifi_setup()
 
   client.setServer(mqtt_server, 1883);
   client.setCallback(callback);
-  sub("website/test");
+  sub("website/status");
 }
 // --- MQTT Setup Ends ---
 
@@ -253,7 +253,7 @@ void reconnect()
     if (client.connect(ID))
     {
       // Write ALL Subscribers
-      sub("website/test");
+      sub("website/status");
     }
     else
     {
@@ -286,5 +286,9 @@ void callback(char *topic, byte *message, unsigned int length)
   }
 
   Serial.println(messageTemp);
+
+  if(messageTemp == "rotate puzzle completed.") {
+    Serial.println("we want to open the door!"); 
+  }
 }
 /*************************************************************/
