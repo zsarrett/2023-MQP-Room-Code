@@ -76,7 +76,9 @@ void setup()
   yellowOn = false;
   count = 0;
 
-  wifi_setup();
+  wifi_setup(); 
+  check_connection(); 
+  pub("room/puzzle", "1"); 
 
   // Serial.println("Setup done");
 }
@@ -187,7 +189,7 @@ bool simon()
     simonYellow();
   }
   // Serial.println("END YELLOW");
-
+  pub("room/puzzle", "2"); 
   // door();
 
   return true;
