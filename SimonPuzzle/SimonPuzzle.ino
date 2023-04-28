@@ -1,8 +1,10 @@
 /*
+ *  File Created By:  Grace O'Reilly
  *  This sketch demonstrates how to scan WiFi networks.
  *  The API is almost the same as with the WiFi Shield library,
  *  the most obvious difference being the different file you need to include:
  */
+
 #include "WiFi.h"
 #include <PubSubClient.h>
 // #include "analogWrite.h"
@@ -76,9 +78,9 @@ void setup()
   yellowOn = false;
   count = 0;
 
-  wifi_setup(); 
-  check_connection(); 
-  pub("room/puzzle", "1"); 
+  wifi_setup();
+  check_connection();
+  pub("room/puzzle", "1");
 
   // Serial.println("Setup done");
 }
@@ -187,48 +189,22 @@ bool simon()
   if (yellowOn == false)
   {
     simonYellow();
+  } else {
+    pub("room/puzzle", "2");
+    delay(10000);
+    // sleep for 10 seconds (place holder)
   }
   // Serial.println("END YELLOW");
-  pub("room/puzzle", "2"); 
   // door();
 
   return true;
 }
 
-// if blueOn == false and redOn == true
-//  void door(){
-
-//   if(yellowOn== true && count == 0){
-//    //drive motor forward (positive speed)
-//     digitalWrite(AIN1, HIGH);                         //set pin 1 to high
-//     digitalWrite(AIN2, LOW);                          //set pin 2 to low
-//     digitalWrite(PWMA, HIGH);               //now that the motor direction is set, drive it at max speed
-//     delay(1800);
-
-//     // //drive motor backward (negative speed)
-//     // digitalWrite(AIN1, LOW);                          //set pin 1 to low
-//     // digitalWrite(AIN2, HIGH);                         //set pin 2 to high
-//     // digitalWrite(PWMA, HIGH);               //now that the motor direction is set, drive it at max speed
-//     // delay(3000);
-
-//     //stop motor
-//     digitalWrite(AIN1, LOW);                          //set pin 1 to low
-//     digitalWrite(AIN2, LOW);                          //set pin 2 to low
-//     digitalWrite(PWMA, LOW);               //now that the motor direction is set, stop motor
-//     delay(3000);
-//     count = count + 1;
-//   }
-// }
-
-// if blueOn == false and redOn == true`x
-
 void loop()
 {
   // Serial.println("HIHI");
-  pub("room/puzzle", "1");
   check_connection();
   simon();
-  pub("room/puzzle", "2");
   delay(100);
   // door();
 
@@ -256,6 +232,7 @@ void reconnect()
     {
       // Write ALL Subscribers
       sub("website/status");
+      pub("room/puzzle", "1");
     }
     else
     {
@@ -289,8 +266,9 @@ void callback(char *topic, byte *message, unsigned int length)
 
   Serial.println(messageTemp);
 
-  if(messageTemp == "rotate puzzle completed.") {
-    Serial.println("we want to open the door!"); 
+  if (messageTemp == "rotate puzzle completed.")
+  {
+    Serial.println("we want to open the door!");
   }
 }
 /*************************************************************/
